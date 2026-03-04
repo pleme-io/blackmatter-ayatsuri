@@ -31,8 +31,11 @@ let
   wallpaperDefaults = lib.optionalAttrs (cfg.wallpaper.path != null) {
     options.wallpaper = cfg.wallpaper.path;
   };
+  systemDefaultsAttrs = lib.optionalAttrs (cfg.systemDefaults != { }) {
+    system_defaults = cfg.systemDefaults;
+  };
   mergedSettings = lib.recursiveUpdate
-    (lib.recursiveUpdate wallpaperDefaults themeDefaults)
+    (lib.recursiveUpdate (lib.recursiveUpdate wallpaperDefaults themeDefaults) systemDefaultsAttrs)
     (if cfg.settings != null then cfg.settings else {});
 
   # Generate YAML config from nix attrs
@@ -126,6 +129,22 @@ in
         type = types.str;
         default = "#2E3440";
         description = "Inactive window dim overlay color (hex).";
+      };
+    };
+
+    systemDefaults = mkOption {
+      type = types.attrsOf (types.attrsOf types.anything);
+      default = { };
+      description = ''
+        macOS defaults applied by karakuri at startup and hot-reload.
+        Outer key = domain (e.g. "com.apple.dock"), inner key = preference key.
+        Merged into `system_defaults` in the generated YAML config.
+      '';
+      example = {
+        "com.apple.dock" = {
+          autohide = true;
+          autohide-delay = 0.0;
+        };
       };
     };
 
