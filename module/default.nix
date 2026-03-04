@@ -11,7 +11,7 @@
 }:
 with lib;
 let
-  inherit (hmHelpers) mkLaunchdService;
+  inherit (hmHelpers) mkLaunchdService mkMcpOptions mkMcpServerEntry;
   cfg = config.blackmatter.components.karakuri;
   isDarwin = pkgs.stdenv.isDarwin;
 
@@ -162,6 +162,11 @@ in
         description = "Enable hot-reload of Rhai scripts on file changes.";
       };
     };
+
+    # ── MCP server options (from substrate hm-service-helpers) ────────
+    mcp = mkMcpOptions {
+      defaultPackage = cfg.package;
+    };
   };
 
   config = mkIf (cfg.enable && isDarwin) (mkMerge [
@@ -203,6 +208,14 @@ in
       xdg.configFile = mapAttrs' (
         name: content: nameValuePair "karakuri/scripts/${name}.rhai" { text = content; }
       ) cfg.scripting.extraScripts;
+    })
+
+    # MCP server entry (consumed by blackmatter-claude)
+    (mkIf cfg.mcp.enable {
+      blackmatter.components.karakuri.mcp.serverEntry = mkMcpServerEntry {
+        command = "${cfg.package}/bin/karakuri";
+        args = [ "mcp" ];
+      };
     })
 
     # Auto-source theme colors from Stylix when available
