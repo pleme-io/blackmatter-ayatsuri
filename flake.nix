@@ -1,5 +1,5 @@
 {
-  description = "blackmatter-karakuri — Home-Manager module for karakuri macOS automation";
+  description = "blackmatter-karakuri — Home-Manager module for ayatsuri macOS automation";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
@@ -33,7 +33,7 @@
     in {
       homeManagerModules.default = import ./module {
         hmHelpers = import "${substrate}/lib/hm-service-helpers.nix" { lib = nixpkgs.lib; };
-        karakuriOverlay = karakuri.overlays.default;
+        ayatsuriOverlay = karakuri.overlays.default;
       };
 
       devShells = forAllSystems (system: let

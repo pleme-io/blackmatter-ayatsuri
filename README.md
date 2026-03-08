@@ -1,14 +1,14 @@
 # blackmatter-karakuri
 
-Home-manager module for the Karakuri macOS window manager and automation framework.
+Home-manager module for the Ayatsuri macOS window manager and automation framework.
 
 ## Overview
 
-Integrates the Karakuri window manager into home-manager with declarative YAML configuration, Rhai scripting support, launchd service management, and an MCP server for AI-driven window control. Darwin-only -- no-ops on Linux. Uses substrate's `hm-service-helpers` for launchd and MCP patterns.
+Integrates the Ayatsuri window manager into home-manager with declarative YAML configuration, Rhai scripting support, launchd service management, and an MCP server for AI-driven window control. Darwin-only -- no-ops on Linux. Uses substrate's `hm-service-helpers` for launchd and MCP patterns.
 
 ## Flake Outputs
 
-- `homeManagerModules.default` -- home-manager module at `blackmatter.components.karakuri`
+- `homeManagerModules.default` -- home-manager module at `blackmatter.components.ayatsuri`
 
 ## Usage
 
@@ -19,7 +19,7 @@ Integrates the Karakuri window manager into home-manager with declarative YAML c
 ```
 
 ```nix
-blackmatter.components.karakuri = {
+blackmatter.components.ayatsuri = {
   enable = true;
   theme.borderColor = "#88C0D0";
   wallpaper.path = "~/Pictures/wallpaper.png";
@@ -29,7 +29,7 @@ blackmatter.components.karakuri = {
     bindings.window_focus_east = "cmd - l";
   };
   scripting.initScript = ''
-    log("karakuri loaded");
+    log("ayatsuri loaded");
   '';
 };
 ```
