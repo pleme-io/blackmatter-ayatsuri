@@ -1,4 +1,4 @@
-# blackmatter-karakuri
+# blackmatter-ayatsuri
 
 Home-manager module for the Ayatsuri macOS window manager and automation framework.
 
@@ -14,7 +14,7 @@ Integrates the Ayatsuri window manager into home-manager with declarative YAML c
 
 ```nix
 {
-  inputs.blackmatter-karakuri.url = "github:pleme-io/blackmatter-karakuri";
+  inputs.blackmatter-ayatsuri.url = "github:pleme-io/blackmatter-ayatsuri";
 }
 ```
 

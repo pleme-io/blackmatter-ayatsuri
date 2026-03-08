@@ -7,8 +7,8 @@
       url = "github:pleme-io/substrate";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    karakuri = {
-      url = "github:pleme-io/karakuri";
+    ayatsuri = {
+      url = "github:pleme-io/ayatsuri";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.substrate.follows = "substrate";
     };
@@ -23,7 +23,7 @@
       self,
       nixpkgs,
       substrate,
-      karakuri,
+      ayatsuri,
       devenv,
     }:
     let
@@ -33,7 +33,7 @@
     in {
       homeManagerModules.default = import ./module {
         hmHelpers = import "${substrate}/lib/hm-service-helpers.nix" { lib = nixpkgs.lib; };
-        ayatsuriOverlay = karakuri.overlays.default;
+        ayatsuriOverlay = ayatsuri.overlays.default;
       };
 
       devShells = forAllSystems (system: let
