@@ -1,5 +1,5 @@
 {
-  description = "blackmatter-karakuri — Home-Manager module for ayatsuri macOS automation";
+  description = "blackmatter-ayatsuri — Home-Manager module for ayatsuri macOS automation";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
