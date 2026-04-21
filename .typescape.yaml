@@ -1,0 +1,22 @@
+schema_version: 1
+manifest:
+  name: blackmatter-ayatsuri
+  kind: BlackmatterComponent
+  archetype: blackmatter-component-hm-only
+  description: home-manager module for ayatsuri — macOS window manager + automation.
+dimensions:
+  vocabulary: [ayatsuri, window-manager, macos, automation, rhai]
+  domains: [Nix, Rhai]
+  stack: [HomeManager]
+  modules:
+    home_manager: module/
+  render:
+    produces:
+      - "ayatsuri launchd agent"
+      - "~/.config/ayatsuri/config.rhai"
+  compliance:
+    satisfies: []
+    participates: []
+  dag:
+    inputs: [nixpkgs, substrate, ayatsuri]
+  attestation: { merkle_root: null, signed_by: null, producer: blackmatter-component-flake.nix }

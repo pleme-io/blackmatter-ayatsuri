@@ -1,5 +1,5 @@
 {
-  description = "blackmatter-ayatsuri — Home-Manager module for ayatsuri macOS automation";
+  description = "Blackmatter Ayatsuri — home-manager module for ayatsuri macOS automation";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
@@ -12,42 +12,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.substrate.follows = "substrate";
     };
-    devenv = {
-      url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      substrate,
-      ayatsuri,
-      devenv,
-    }:
-    let
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"
-      ];
-    in {
-      homeManagerModules.default = import ./module {
+  outputs = inputs @ { self, nixpkgs, substrate, ayatsuri, ... }:
+    (import "${substrate}/lib/blackmatter-component-flake.nix") {
+      inherit self nixpkgs;
+      name = "blackmatter-ayatsuri";
+      description = "home-manager module for ayatsuri — macOS window manager + automation";
+      modules.homeManager = import ./module {
         hmHelpers = import "${substrate}/lib/hm-service-helpers.nix" { lib = nixpkgs.lib; };
         ayatsuriOverlay = ayatsuri.overlays.default;
       };
-
-      devShells = forAllSystems (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        default = devenv.lib.mkShell {
-          inputs = { inherit nixpkgs devenv; };
-          inherit pkgs;
-          modules = [{
-            languages.nix.enable = true;
-            packages = with pkgs; [ nixpkgs-fmt nil ];
-            git-hooks.hooks.nixpkgs-fmt.enable = true;
-          }];
-        };
-      });
     };
 }
