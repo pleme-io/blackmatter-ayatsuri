@@ -2,10 +2,9 @@
   description = "Blackmatter Ayatsuri — home-manager module for ayatsuri macOS automation";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.follows = "substrate/nixpkgs";
     substrate = {
       url = "github:pleme-io/substrate";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     ayatsuri = {
       url = "github:pleme-io/ayatsuri";
